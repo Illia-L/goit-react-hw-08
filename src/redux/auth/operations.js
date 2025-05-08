@@ -14,7 +14,6 @@ function unsetAuthorizationHeader() {
 export const register = createAsyncThunk(
   'auth/register',
   async (credentials, { rejectWithValue }) => {
-    console.log('register operation runs...');
     try {
       const response = await axios.post('/users/signup', credentials);
       const data = response.data;
@@ -29,31 +28,30 @@ export const register = createAsyncThunk(
   }
 );
 
-export const login = createAsyncThunk(
-  'auth/login',
-  async (credentials, { rejectWithValue }) => {
-    try {
-      const response = await axios.post('/users/login', credentials);
-      const data = response.data;
+export const login = createAsyncThunk('auth/login', async credentials => {
+  try {
+    const response = await axios.post('/users/login', credentials);
+    const data = response.data;
 
-      setAuthorizationHeader(data.token);
+    setAuthorizationHeader(data.token);
 
-      return data;
-    } catch (err) {}
-  }
-);
+    return data;
+  } catch (err) {}
+});
 
-export const logout = createAsyncThunk('auth/logout', async () => {
+export const logout = createAsyncThunk('auth/logout', async (_, {rejectWithValue}) => {
   try {
     await axios.post('/users/logout');
 
     unsetAuthorizationHeader();
-  } catch (err) {}
+  } catch (err) {
+    throw new Error()
+  }
 });
 
 export const refreshUser = createAsyncThunk(
   'auth/refresh',
-  async (_, { getState, rejectWithValue }) => {
+  async (_, { getState }) => {
     const token = getState().auth.token;
 
     if (!token) throw new error('Not authorized');
@@ -65,7 +63,6 @@ export const refreshUser = createAsyncThunk(
 
       return response.data;
     } catch (err) {
-      console.log(err);
     }
   }
 );

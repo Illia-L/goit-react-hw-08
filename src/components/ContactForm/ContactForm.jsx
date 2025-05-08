@@ -4,6 +4,7 @@ import { addContact } from '../../redux/contacts/operations';
 import { Box, Button, TextField } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useEffect } from 'react';
 const ContactValidationSchema = Yup.object().shape({
   name: Yup.string()
     .min(3, 'Too short')
@@ -21,19 +22,31 @@ function ContactForm() {
     register,
     handleSubmit,
     reset,
+    formState,
     formState: { errors },
-  } = useForm({ resolver: yupResolver(ContactValidationSchema) });
+  } = useForm({
+    defaultValues: { name: '', number: '' },
+    resolver: yupResolver(ContactValidationSchema),
+  });
+
+  useEffect(() => {
+    if (formState.isSubmitSuccessful) reset();
+  }, [formState.isSubmitSuccessful]);
 
   function onSubmit(values) {
     dispatch(addContact({ ...values }));
-    reset();
   }
 
   return (
     <Box
       component='form'
       onSubmit={handleSubmit(onSubmit)}
-      sx={{ display: 'flex', gap: '1rem', alignItems: 'flex-start', mt: {xs: 3, sm: 4, lg: 5 } }}
+      sx={{
+        display: 'flex',
+        gap: '1rem',
+        alignItems: 'flex-start',
+        mt: { xs: 3, sm: 4, lg: 5 },
+      }}
     >
       <TextField
         {...register('name')}
@@ -43,7 +56,7 @@ function ContactForm() {
         size='small'
         margin='normal'
         error={!!errors.name}
-        sx={{width: '10rem'}}
+        sx={{ width: '10rem' }}
       />
 
       <TextField
@@ -55,13 +68,13 @@ function ContactForm() {
         fullWidth
         margin='normal'
         error={!!errors.number}
-        sx={{width: '10rem'}}
+        sx={{ width: '10rem' }}
       />
 
       <Button
         variant='contained'
         type='submit'
-        sx={{mt: '1rem'}}
+        sx={{ mt: '1rem' }}
       >
         Add
       </Button>

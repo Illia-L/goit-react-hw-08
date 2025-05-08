@@ -94,6 +94,7 @@ function LoginForm() {
           type='submit'
           variant='contained'
           size='large'
+          loading={isPending}
           sx={{ mt: { xs: 2, sm: 3, lg: 4 }, mx: 'auto', display: 'block' }}
         >
           Login

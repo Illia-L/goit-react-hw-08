@@ -1,8 +1,3 @@
-import {
-  InputAdornment,
-  TextField,
-  useTheme,
-} from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
@@ -15,33 +10,41 @@ import SearchBox from '../SearchBox/SearchBox';
 import { logout } from '../../redux/auth/operations';
 import { NavLink } from 'react-router';
 import MenuIcon from '@mui/icons-material/Menu';
-import * as mui from '@mui/material'
-// import { useTheme } from '@emotion/react';
-
-// User menu:
-// Desktop header: +Home, +Contacts, +search, user, Logout
-// Mobile header: +search, menu icon
-
-// Mobile menu: Home, Contacts, devider, user, Logout
-
-console.log(mui);
+import MobileMenu from '../MobileMenu/MobileMenu';
+import { useState } from 'react';
+import SnackbarAlert from '../SnackbarAlert/SnackbarAlert';
 
 function UserMenu() {
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [isError, setIsError] = useState(false);
+  const [isPending, setIsPending] = useState(false);
   const name = useSelector(selectName);
   const dispatch = useDispatch();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useMediaQuery('(max-width: 767px');
 
-  const handleOpenNavMenu = event => {
-    setAnchorElNav(event.currentTarget);
-  };
+  function handleOpenNavMenu(e) {
+    setAnchorElNav(e.currentTarget);
+  }
 
-  const handleCloseNavMenu = () => {
+  function handleCloseNavMenu() {
     setAnchorElNav(null);
-  };
+  }
+
+  async function handleLogout() {
+    try {
+      setIsError(false);
+      setIsPending(true);
+      await dispatch(logout()).unwrap();
+    } catch (err) {
+      setIsError(true);
+    } finally {
+      setIsPending(false);
+    }
+  }
 
   return (
     <>
+      <SnackbarAlert open={isError} />
       {!isMobile && (
         <Box
           component='nav'
@@ -51,7 +54,14 @@ function UserMenu() {
           <Button
             component={NavLink}
             to='/'
-            sx={{ my: 2, color: 'white', display: 'block' }}
+            sx={theme => ({
+              my: 2,
+              color: 'white',
+              display: 'block',
+              '&.active': {
+                textDecoration: 'underline',
+              },
+            })}
           >
             Home
           </Button>
@@ -59,7 +69,19 @@ function UserMenu() {
           <Button
             component={NavLink}
             to='/contacts'
-            sx={{ my: 2, color: 'white', display: 'block' }}
+            sx={theme => ({
+              my: 2,
+              color: 'white',
+              display: 'block',
+              '&.active': {
+                textDecoration: 'underline',
+                pointerEvents: 'none',
+                cursor: 'default',
+              },
+              '&:hover': {
+                textDecoration: 'underline',
+              },
+            })}
           >
             Contacts
           </Button>
@@ -74,14 +96,24 @@ function UserMenu() {
 
       {!isMobile && (
         <Box sx={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
-          <Typography
-            sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
-          >
-            <AccountCircleIcon /> {name || 'Guest'}
-          </Typography>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <AccountCircleIcon />
+
+            <Typography
+              sx={{
+                maxWidth: 100,
+                overflow: 'hidden',
+                whiteSpace: 'nowrap',
+                textOverflow: 'ellipsis',
+              }}
+            >
+              {name || 'Guest'}
+            </Typography>
+          </Box>
 
           <Button
-            onClick={() => dispatch(logout())}
+            onClick={handleLogout}
+            loading={isPending}
             sx={{ color: 'white' }}
           >
             Logout
@@ -90,7 +122,7 @@ function UserMenu() {
       )}
 
       {isMobile && (
-        <Box sx={{ flexGrow: 1 }}>
+        <Box>
           <IconButton
             size='large'
             aria-label='account of current user'
@@ -104,8 +136,6 @@ function UserMenu() {
 
           <MobileMenu
             anchorElNav={anchorElNav}
-            isLogged={isLogged}
-            isRefreshing={isRefreshing}
             handleCloseNavMenu={handleCloseNavMenu}
           />
         </Box>

@@ -12,6 +12,7 @@ import ContactsPage from './pages/ContactsPage/ContactsPage';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import RestrictedRoute from './components/RestrictedRoute/RestrictedRoute';
 import LoginPage from './pages/LoginPage/LoginPage';
+import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 
 function App() {
   return (
@@ -43,18 +44,23 @@ function App() {
             path='/login'
             element={
               <RestrictedRoute>
-                <LoginPage/>
+                <LoginPage />
               </RestrictedRoute>
             }
           />
 
           <Route
-            path='/signup'
+            path='/register'
             element={
               <RestrictedRoute>
                 <RegistrationPage />
               </RestrictedRoute>
             }
+          />
+
+          <Route
+            path='*'
+            element={<NotFoundPage />}
           />
         </Routes>
       </Layout>
