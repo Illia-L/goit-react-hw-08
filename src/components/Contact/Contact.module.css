@@ -1,0 +1,50 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: calc((100% - 16px) / 2);
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-family: Arial, sans-serif;
+  margin-bottom: 8px;
+  background-color: #f9f9f9;
+}
+
+.data {
+  /* flex: 1 0 160px; */
+  /* display: flex;
+  flex-direction: column; */
+  font-size: 16px;
+  line-height: 24px; /* Ensures vertical alignment */
+}
+
+.dataPiece {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 16px;
+}
+
+.container svg {
+  height: 24px;
+}
+
+.container button {
+  font-size: 14px;
+  color: white;
+  background-color: #d9534f;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 250ms linear;
+}
+
+.container button:hover {
+  background-color: #c12d2b;
+}
+
+.container button:focus {
+  outline: none;
+}

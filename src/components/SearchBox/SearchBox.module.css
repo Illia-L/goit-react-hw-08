@@ -1,0 +1,17 @@
+
+.container {
+  margin-top: 40px;
+}
+
+.container input {
+  margin-top: 16px;
+  font-size: 14px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.container input:focus {
+  border-color: #007bff;
+  outline: none;
+}
