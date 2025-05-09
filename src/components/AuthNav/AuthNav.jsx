@@ -5,19 +5,20 @@ import { NavLink } from 'react-router';
 function AuthNav() {
   return (
     <>
-      <Button
-      component={NavLink}
-      to='/'
-      sx={{ my: 2, color: 'white', display: 'block' }}
-        >
-      Home
-        </Button>
+      {/* <Button
+        component={NavLink}
+        to='/'
+        sx={{ my: 2, color: 'white', display: 'block' }}
+      >
+        Home
+      </Button> */}
+
       <Box
         sx={{
           flexGrow: 1,
           display: 'flex',
           gap: { xs: 2, sm: 2.25, md: 2.5, lg: 2.75 },
-          justifyContent: 'flex-end'
+          justifyContent: 'flex-end',
         }}
       >
         <Button

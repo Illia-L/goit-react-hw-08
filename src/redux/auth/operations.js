@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { clearContacts } from '../contacts/slice';
 
 axios.defaults.baseURL = 'https://connections-api.goit.global';
 
@@ -39,30 +40,26 @@ export const login = createAsyncThunk('auth/login', async credentials => {
   } catch (err) {}
 });
 
-export const logout = createAsyncThunk('auth/logout', async (_, {rejectWithValue}) => {
-  try {
+export const logout = createAsyncThunk(
+  'auth/logout',
+  async () => {
     await axios.post('/users/logout');
 
     unsetAuthorizationHeader();
-  } catch (err) {
-    throw new Error()
   }
-});
+);
 
 export const refreshUser = createAsyncThunk(
   'auth/refresh',
-  async (_, { getState }) => {
+  async (_, { getState, rejectWithValue }) => {
     const token = getState().auth.token;
 
     if (!token) throw new error('Not authorized');
 
     setAuthorizationHeader(token);
 
-    try {
-      const response = await axios.get('/users/current');
+    const response = await axios.get('/users/current');
 
-      return response.data;
-    } catch (err) {
-    }
+    return response.data;
   }
 );

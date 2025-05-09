@@ -6,6 +6,7 @@ import UserMenu from '../UserMenu/UserMenu';
 import { useSelector } from 'react-redux';
 import { selectIsLogged, selectIsRefreshing } from '../../redux/auth/selectors';
 import AuthNav from '../AuthNav/AuthNav';
+import Navigation from '../Navigation/Navigation';
 
 function AppBar() {
   const isLogged = useSelector(selectIsLogged);
@@ -19,6 +20,11 @@ function AppBar() {
           sx={{ gap: { xs: 2, sm: 2.25, md: 2.5, lg: 2.75 } }}
         >
           <MenuBookIcon />
+
+          <Navigation
+            isLogged={isLogged}
+            isRefreshing={isRefreshing}
+          />
 
           {isLogged && <UserMenu />}
 

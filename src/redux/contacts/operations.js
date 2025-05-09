@@ -24,7 +24,25 @@ export const addContact = createAsyncThunk(
 
       return response.data;
     } catch (err) {
-      return rejectWithValue(err.message);
+      return rejectWithValue(err.response?.data?.message);
+    }
+  }
+);
+
+export const updateContact = createAsyncThunk(
+  'contacts/updateContact',
+  async (contact, { rejectWithValue }) => {
+    const { name, number } = contact;
+
+    try {
+      const response = await axios.patch(`/contacts/${contact.id}`, {
+        name,
+        number,
+      });
+
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.message);
     }
   }
 );
@@ -37,7 +55,7 @@ export const deleteContact = createAsyncThunk(
 
       return id;
     } catch (err) {
-      return rejectWithValue(err.message);
+      return rejectWithValue(err.response?.data?.message);
     }
   }
 );

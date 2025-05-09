@@ -45,48 +45,6 @@ function UserMenu() {
   return (
     <>
       <SnackbarAlert open={isError} />
-      {!isMobile && (
-        <Box
-          component='nav'
-          aria-label='Main navigation'
-          sx={{ display: 'flex', gap: { xs: 2, sm: 2.25, md: 2.5, lg: 2.75 } }}
-        >
-          <Button
-            component={NavLink}
-            to='/'
-            sx={theme => ({
-              my: 2,
-              color: 'white',
-              display: 'block',
-              '&.active': {
-                textDecoration: 'underline',
-              },
-            })}
-          >
-            Home
-          </Button>
-
-          <Button
-            component={NavLink}
-            to='/contacts'
-            sx={theme => ({
-              my: 2,
-              color: 'white',
-              display: 'block',
-              '&.active': {
-                textDecoration: 'underline',
-                pointerEvents: 'none',
-                cursor: 'default',
-              },
-              '&:hover': {
-                textDecoration: 'underline',
-              },
-            })}
-          >
-            Contacts
-          </Button>
-        </Box>
-      )}
 
       <Box sx={{ flexGrow: 1 }}>
         <Box sx={{ justifySelf: 'flex-end' }}>

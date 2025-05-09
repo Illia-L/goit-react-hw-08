@@ -13,6 +13,7 @@ import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import RestrictedRoute from './components/RestrictedRoute/RestrictedRoute';
 import LoginPage from './pages/LoginPage/LoginPage';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
+import HomePage from './pages/HomePage.jsx/HomePage';
 
 function App() {
   return (
@@ -28,7 +29,7 @@ function App() {
         <Routes>
           <Route
             path='/'
-            element={<p>Home</p>}
+            element={<HomePage/>}
           />
 
           <Route

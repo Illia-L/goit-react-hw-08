@@ -10,12 +10,6 @@ export default function SnackbarAlert({
 }) {
   const [open, setOpen] = useState(openProp);
 
-  console.log('SnackbarAlert called...');
-  console.log('open:', open);
-  console.log('message:', message);
-  console.log('severity:', severity);
-  console.log('autoHideDuration:', autoHideDuration);
-
   useEffect(() => {
     setOpen(openProp);
   }, [openProp]);
