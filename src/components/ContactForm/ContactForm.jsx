@@ -70,8 +70,6 @@ function ContactForm({ editedContactId, setEditeeditedContactId }) {
     reset();
   }
 
-  console.log('formState:', formState);
-
   return (
     <>
       <SnackbarAlert
