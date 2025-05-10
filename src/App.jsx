@@ -5,31 +5,30 @@ import '@fontsource/roboto/700.css';
 import Layout from './components/Layout/Layout';
 import { Route, Routes } from 'react-router';
 import RegistrationPage from './pages/RegistrationPage/RegistrationPage';
-import { PersistGate } from 'redux-persist/integration/react';
-import { persistor } from './redux/store';
-import RefreshUser from './components/RefreshUser';
 import ContactsPage from './pages/ContactsPage/ContactsPage';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import RestrictedRoute from './components/RestrictedRoute/RestrictedRoute';
 import LoginPage from './pages/LoginPage/LoginPage';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 import HomePage from './pages/HomePage.jsx/HomePage';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { refreshUser } from './redux/auth/operations';
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(refreshUser());
+  }, []);
+
   return (
     <>
-      <PersistGate
-        loading={null}
-        persistor={persistor}
-      >
-        <RefreshUser />
-      </PersistGate>
-
       <Layout>
         <Routes>
           <Route
             path='/'
-            element={<HomePage/>}
+            element={<HomePage />}
           />
 
           <Route

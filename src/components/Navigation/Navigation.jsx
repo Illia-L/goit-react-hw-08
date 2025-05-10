@@ -1,14 +1,18 @@
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router';
+import { selectIsLoggedIn, selectIsRefreshing } from '../../redux/auth/selectors';
 
-function Navigation({ isLogged, isRefreshing }) {
+function Navigation() {
   const isMobile = useMediaQuery('(max-width: 767px)');
+  const isLoggedIn = useSelector(selectIsLoggedIn)
+  const isRefreshing = useSelector(selectIsRefreshing)
 
   return (
     <>
-      {!isMobile && isLogged && (
+      {!isMobile && isLoggedIn && (
         <Box
           component='nav'
           aria-label='Main navigation'
@@ -51,7 +55,7 @@ function Navigation({ isLogged, isRefreshing }) {
         </Box>
       )}
 
-      {!isLogged && !isRefreshing && (
+      {!isLoggedIn && !isRefreshing && (
         <Button
           component={NavLink}
           to='/'

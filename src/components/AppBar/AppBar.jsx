@@ -21,10 +21,7 @@ function AppBar() {
         >
           <MenuBookIcon />
 
-          <Navigation
-            isLogged={isLogged}
-            isRefreshing={isRefreshing}
-          />
+          <Navigation />
 
           {isLogged && <UserMenu />}
 

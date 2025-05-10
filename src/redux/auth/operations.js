@@ -40,21 +40,18 @@ export const login = createAsyncThunk('auth/login', async credentials => {
   } catch (err) {}
 });
 
-export const logout = createAsyncThunk(
-  'auth/logout',
-  async () => {
-    await axios.post('/users/logout');
+export const logout = createAsyncThunk('auth/logout', async () => {
+  await axios.post('/users/logout');
 
-    unsetAuthorizationHeader();
-  }
-);
+  unsetAuthorizationHeader();
+});
 
 export const refreshUser = createAsyncThunk(
   'auth/refresh',
-  async (_, { getState, rejectWithValue }) => {
+  async (_, { getState }) => {
     const token = getState().auth.token;
 
-    if (!token) throw new error('Not authorized');
+    if (!token) throw new Error();
 
     setAuthorizationHeader(token);
 
