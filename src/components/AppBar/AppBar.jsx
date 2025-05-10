@@ -4,12 +4,15 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import Container from '@mui/material/Container';
 import UserMenu from '../UserMenu/UserMenu';
 import { useSelector } from 'react-redux';
-import { selectIsLogged, selectIsRefreshing } from '../../redux/auth/selectors';
+import {
+  selectIsLoggedIn,
+  selectIsRefreshing,
+} from '../../redux/auth/selectors';
 import AuthNav from '../AuthNav/AuthNav';
 import Navigation from '../Navigation/Navigation';
 
 function AppBar() {
-  const isLogged = useSelector(selectIsLogged);
+  const isLogged = useSelector(selectIsLoggedIn);
   const isRefreshing = useSelector(selectIsRefreshing);
 
   return (
